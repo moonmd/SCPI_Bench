@@ -1,0 +1,12 @@
+sample_rate_hz: 2
+hold_s: 1.0
+steps:
+  - psu: { ch: CH1, voltage: 4.5, current: 1.0, on: true }
+    dmm: { function: VOLT:DC, range: 10 }
+    hold_s: 2.0
+  - psu: { voltage: 5.0 }
+    dmm: { function: VOLT:DC, range: 10 }
+    hold_s: 2.0
+  - psu: { voltage: 5.5 }
+    dmm: { function: VOLT:DC, range: 10 }
+    hold_s: 2.0

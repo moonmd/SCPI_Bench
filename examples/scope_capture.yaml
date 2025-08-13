@@ -1,0 +1,14 @@
+sample_rate_hz: 2
+hold_s: 1.0
+steps:
+  - psu: { ch: CH1, voltage: 5.0, current: 1.0, on: true }
+    dmm: { function: VOLT:DC, range: 10 }
+    scope:
+      channel: C1
+      probe: 10
+      scale: 0.1
+      tdiv: 0.001
+      trig_level: 1.0
+      trig_slope: POS
+      delay_s: 0.2
+    hold_s: 3.0

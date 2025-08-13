@@ -1,0 +1,67 @@
+# Conservative NiMH rehabilitation plan for 12s pack (~14.4 V nominal)
+sample_rate_hz: 1
+hold_s: 60
+
+safety:
+  vmax: 16.8          # cap at 1.40 V/cell
+  vmin_abort: 5.0
+  max_hours: 8
+  negdv:
+    enabled: true
+    window_s: 120
+    threshold_v: -0.05
+    require_s: 120
+  maxtemp_c: 45       # abort above 45 C
+  max_dtemp_c_per_min: 2.0  # abort if >2 C/min rise
+  temp_window_s: 120
+
+steps:
+  # Initial gentle charge at 0.1 A, small voltage ramps, short holds
+  - psu: { ch: CH1, current: 0.1, voltage: 12.0, on: true }
+    dmm: { function: VOLT:DC, range: 50 }
+    hold_s: 300
+
+  # 0.5 V increments up to 14.0 V
+  - psu: { voltage: 12.5 }
+    dmm: { function: VOLT:DC, range: 50 }
+    hold_s: 180
+  - psu: { voltage: 13.0 }
+    dmm: { function: VOLT:DC, range: 50 }
+    hold_s: 180
+  - psu: { voltage: 13.5 }
+    dmm: { function: VOLT:DC, range: 50 }
+    hold_s: 180
+  - psu: { voltage: 14.0 }
+    dmm: { function: VOLT:DC, range: 50 }
+    hold_s: 300
+
+  # Rest to cool and equalize
+  - psu: { on: false }
+    hold_s: 600
+
+  # Continue in 0.5 V steps up to 16.5 V, longer holds
+  - psu: { on: true, current: 0.1, voltage: 14.5 }
+    dmm: { function: VOLT:DC, range: 50 }
+    hold_s: 300
+  - psu: { voltage: 15.0 }
+    dmm: { function: VOLT:DC, range: 50 }
+    hold_s: 300
+  - psu: { voltage: 15.5 }
+    dmm: { function: VOLT:DC, range: 50 }
+    hold_s: 300
+  - psu: { voltage: 16.0 }
+    dmm: { function: VOLT:DC, range: 50 }
+    hold_s: 300
+  - psu: { voltage: 16.5 }
+    dmm: { function: VOLT:DC, range: 50 }
+    hold_s: 300
+
+  # Final step to 16.8 V (1.40 V/cell max)
+  - psu: { voltage: 16.8 }
+    dmm: { function: VOLT:DC, range: 50 }
+    hold_s: 300
+    terminate_on_negdv: true
+
+  # Cool-down
+  - psu: { on: false }
+    hold_s: 900

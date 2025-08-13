@@ -1,0 +1,18 @@
+# Python caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual environments
+.env
+.venv
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Output artifacts
+results.csv
+*.parquet
+*.pq
+*.svg

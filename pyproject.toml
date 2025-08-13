@@ -1,0 +1,10 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sigbench-generic"
+version = "0.1.0"
+description = "Generic SCPI automation with safety, scope, ENS210, USB autodetect, and Parquet/SVG utilities"
+requires-python = ">=3.9"
+dependencies = ["pyyaml","pyserial","pyarrow","matplotlib"]

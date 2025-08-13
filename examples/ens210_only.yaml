@@ -1,0 +1,7 @@
+# Log ENS210 temperature & humidity only (PSU off)
+sample_rate_hz: 1
+hold_s: 1.0
+steps:
+  - psu: { ch: CH1, voltage: 0.0, current: 0.10, on: false }
+    dmm: { function: VOLT:DC, range: 100 }
+    hold_s: 300
