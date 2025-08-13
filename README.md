@@ -16,11 +16,10 @@ pip install -r requirements.txt
 ```bash
 python cli.py run <plan.yaml> [--spd HOST[:PORT]|/dev/usbtmcX] [--sdm HOST[:PORT]|/dev/usbtmcX] \
                         [--scope HOST[:PORT]|/dev/usbtmcX] [--ens210 /dev/ttyACM*] \
-                        [--usb] --out <results.csv|results.parquet>
+                        --out <results.csv|results.parquet>
 ```
 
 - **--spd / --sdm / --scope**: Specify targets for PSU, DMM, and scope. Accepts `HOST[:PORT]` or a `/dev/usbtmc*` device.
-- **--usb**: Autodetect `/dev/usbtmc*` devices via `*IDN?` and auto‑map to SPD/SDM/Scope if not explicitly provided.
 - **--ens210**: Serial device for AMS USB‑I²C dongle (e.g. `/dev/ttyACM0`). Optional.
 - **--out**:
   - If ends with `.csv`, writes CSV with columns: `t_s,v_set,i_set,v_meas,i_meas,scope_vpp,scope_vrms,temp_c,humidity_pct,ens_ok`.
@@ -41,6 +40,7 @@ python cli.py run examples/siglent_psu_dmm.yaml \
 ```
 python cli.py scan
 ```
+
 ### LAN instruments
 ```bash
 python cli.py run examples/siglent_psu_dmm.yaml \
@@ -61,7 +61,7 @@ python cli.py run examples/nimh_rehab.yaml --spd /dev/usbtmc0 --sdm /dev/usbtmc1
 ### TBD: Scope
 ```bash
 python cli.py run examples/scope_capture.yaml \
-  --usb --ens210 /dev/ttyACM0 --out results.csv
+  --scope /dev/usbtmc2 --ens210 /dev/ttyACM0 --out results.csv
 ```
 
 ## TBD: Scope waveform exports
@@ -81,4 +81,3 @@ python tools/extract_from_svg.py capture_step1_C1.svg > recovered.csv
 
 ## Notes
 - Safety guardrails can be set in YAML under `safety:` (see `nimh_rehab.yaml`).
-- `--usb` autodetect maps `/dev/usbtmc*` to roles via `*IDN?` (SPD/SDM/SDS). You can still override any with explicit flags.
